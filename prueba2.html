@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Eduardo Adrian Chalé Ciau">
+        <meta name="description" content="Examen, que muestra la creacion de una tabla por medio de un archivo csv">
+        <meta name="keys" content ="button, table, file, javascript, ajax, programs">
+        <title>Examen: Creacion de tabla</title>
+        <link rel="stylesheet" type="text/css" href="stilo.css">
+        <meta charset="utf-8" />
+        <style>
+            #container,#btn{
+                margin:0 auto;
+                width:80%;
+                overflow:auto;
+                color:rgb(255, 255, 255);
+            }
+
+            tr:first-of-type{background-color: royalblue;}
+
+            tr:nth-of-type(2n+3){background-color: salmon;
+            color: white;}
+            
+            tr:nth-of-type(2n+2){background-color: rgb(114, 250, 191);
+            color: rgb(0, 0, 0);}
+
+</style>
+</head>
+
+<body style="background-color: black;">
+  <div id="btn">
+    <input type="file" id="inputfile" />
+    <input type="button" id="viewfile" value="Import file" />
+    <br><br>
+  </div>
+  <div class="container" id="container">
+    <table class="gridtable" id="main">
+        <thead>
+          <tr class="tableheader">
+              
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $( document ).ready(function() {
+
+        $('#viewfile').click(function () {
+
+            
+
+            let var1 = document.getElementById("inputfile").value;
+           
+            if(var1.slice(var1.length-4,var1.length)==".csv"){
+            var Table = document.getElementById("main");
+            Table.innerHTML = ""; 
+    
+            var rdr = new FileReader();
+            rdr.onload = function (e) {
+              //divide las diferentes celdas
+              var allrows = e.target.result.split("\n");
+            
+              //ciclo para todas las columnas de head de la tabla
+              var columns = allrows[0].split(",");
+                var colcount = columns.length;
+
+                var newhead="<tr><th>" + columns[0] + "</th>";
+                for(var i=1;i<colcount;i++){
+                     newhead=newhead+("<th>" + columns[i] + "</th>");
+                }
+                newhead=newhead+"</tr>"
+
+                $('#main').append(newhead);
+
+              //ciclo a traves de todas las lineas del cuerpo de la tabla
+              for (var row = 1; row < allrows.length; row ++ ) {
+                var columns = allrows[row].split(",");
+                var colcount = columns.length;
+                
+
+                var newrow="<tr><td>" + columns[0] + "</td>";
+                for(var i=1;i<colcount;i++){
+                     newrow=newrow+("<td>" + columns[i] + "</td>");
+                }
+                newrow=newrow+"</tr>"
+
+                $('#main').append(newrow);
+              }
+            }
+            rdr.readAsText($("#inputfile")[0].files[0]);
+        }else{
+            //mensaje de error
+            alert("No es un archivo .csv o no se ingreso un archivo");
+            console.log("No es un archivo .csv o no se ingreso un archivo");
+        }
+        });
+        
+    });
+    </script>
+
+    </body>
+</html>
