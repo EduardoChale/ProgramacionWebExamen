@@ -13,9 +13,11 @@ table.gridtable th {
     padding: 8px;
     font-family: helvetica,arial,sans-serif;
     border-style: solid;
-    color:#000000;
+    color:#a91111;
+    
 
 }
+
 
 table.gridtable td {
     border-width: 1px;
@@ -24,3 +26,4 @@ table.gridtable td {
     border-style: solid;
 
 }
+
